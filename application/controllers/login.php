@@ -29,7 +29,8 @@ class Login extends CI_Controller
                 switch ($user->usuario_estado) {
                     case 1:
                         // Iniciar sesión y redirigir al dashboard
-                        $this->session->set_userdata('user', $user->Usuario_correo);
+                        $this->session->set_userdata('user', $user->usuario_email);
+                        echo 'session creada para el usuario: ' . $user->usuario_email;
                         redirect('dashboard/index');
                         break;
                     default:
@@ -42,7 +43,7 @@ class Login extends CI_Controller
 
             $this->load->view('V_login', $login_error);
             echo '<script>';
-            echo 'setTimeout(function () { window.location.href = "' . site_url('login/index') . '"; }, 2000);';   
+            echo 'setTimeout(function () { window.location.href = "' . site_url('login/index') . '"; }, 2000);';
             echo '</script>';
 
         } else {

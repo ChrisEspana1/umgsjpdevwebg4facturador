@@ -56,6 +56,8 @@ $route['usuario'] = 'Login/usuario'; // 'usuario' es la URL amigable, 'Login' es
 $route['proveedor'] = 'V_Proveedor';
 $route['pedidos'] = 'V_Pedidos';
 $route['actualizar/(:num)'] = 'actualizar/index/$123';
+$route['dashboard'] = 'dashboard/index';
+$route['login'] = 'login/index';
 
 
 
