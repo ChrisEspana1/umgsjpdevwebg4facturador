@@ -5,11 +5,17 @@
      function __construct(){
          parent::__construct();
          $this->load->model('clienteModel');
+         $this->load->library('session');
    }
 
 // FUNCION INDEX
      public function index(){
-         $data['clientes'] = $this->clienteModel->getClientes();
-         $this->load->view('V_venta', $data);
+        if (!$this->session->userdata('user')) {
+            redirect('login/index');
+        } else {
+            $data['clientes'] = $this->clienteModel->getClientes();
+            $this->load->view('V_venta', $data);
+        }
+         
      }
 }

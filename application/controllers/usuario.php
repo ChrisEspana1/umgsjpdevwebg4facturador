@@ -8,13 +8,18 @@ function __construct()
 	{
 		parent::__construct();
 		$this->load->model('usuarioModel');
+        $this->load->library('session');
 	}
 
     public function index(){
-		$resultados = $this->usuarioModel->getUsuarioData();
-		$this->data['resultados'] = $resultados;
-		$this->data['titulo'] = "Nuevo titulo";
-		$this->load->view('V_usuario', $this->data);
+        if (!$this->session->userdata('user')) {
+            redirect('login/index');
+        } else {
+            $resultados = $this->usuarioModel->getUsuarioData();
+            $this->data['resultados'] = $resultados;
+            $this->data['titulo'] = "Nuevo titulo";
+            $this->load->view('V_usuario', $this->data);
+        }
 	}
 
     public function editarUser($usuarioId){

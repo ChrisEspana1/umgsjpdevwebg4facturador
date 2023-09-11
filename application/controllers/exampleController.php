@@ -7,14 +7,20 @@ class ExampleController extends CI_Controller {
         $this->load->model('Venta_model');
         $this->load->model('productoModel');
         $this->load->model('detalleModel');
+        $this->load->library('session');
     }
 
     public function index($venta_id = null)
     {
-        $data['productos'] = $this->productoModel->sendProductos();
-        // Pasa el venta_id a la vista V_detalle
-        $data['venta_id'] = $venta_id;
-        $this->load->view('example', $data);
+        if (!$this->session->userdata('user')) {
+            redirect('login/index');
+        } else {
+            $data['productos'] = $this->productoModel->sendProductos();
+            // Pasa el venta_id a la vista V_detalle
+            $data['venta_id'] = $venta_id;
+            $this->load->view('example', $data);
+        }
+        
     }
     
     public function guardar() {

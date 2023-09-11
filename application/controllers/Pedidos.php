@@ -6,10 +6,14 @@ class Pedidos extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('PedidosModel');
+        $this->load->library('session');    
     }
 
     public function ingresarOrdenCompra() {
-        // Obtener los datos del formulario
+        if (!$this->session->userdata('user')) {
+            redirect('login/index');
+        } else {
+           // Obtener los datos del formulario
         $nombreCliente = $this->input->post('nombre_cliente');
         $producto = $this->input->post('producto');
         $descripcion = $this->input->post('descripcion');
@@ -22,9 +26,12 @@ class Pedidos extends CI_Controller {
 
         // Redireccionar a la vista de pedidos con un mensaje de confirmación
         redirect('pedidos/index?mensaje=' . urlencode($resultado));
+        }
+        
     }
 
     public function index() {
+        
         $data['mensaje'] = $this->input->get('mensaje'); // Obtener el mensaje de confirmación desde la URL
         $this->load->view('V_Pedidos', $data);
     }

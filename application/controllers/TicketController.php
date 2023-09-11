@@ -6,11 +6,16 @@ class TicketController extends CI_Controller{
         require_once(APPPATH.'libraries/dompdf/autoload.inc.php');
         $this->dompdf = new \Dompdf\Dompdf();
         $this->load->model('TicketModel');
+        $this->load->library('session');
     }
 
     public function index(){
-        $data['detalles'] = $this->TicketModel->getDetalle();
-        $this->load->view('V_ticket', $data);
+        if (!$this->session->userdata('user')) {
+            redirect('login/index');
+        } else {
+            $data['detalles'] = $this->TicketModel->getDetalle();
+            $this->load->view('V_ticket', $data);
+        }
     }
 
     public function buscar_detalle_venta() {

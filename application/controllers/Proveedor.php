@@ -6,10 +6,16 @@ class Proveedor extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('ProveedorModel'); // Carga el modelo en el constructor
+        $this->load->library('session'); // Carga la librería de sesiones
     }
 
     public function index() {
-        $this->load->view('V_Proveedor');
+        if (!$this->session->userdata('user')) {
+            redirect('login/index');
+        } else {
+            $this->load->view('V_Proveedor');
+        }
+     
     }
 
     public function insertarProveedor() {

@@ -5,13 +5,20 @@ class Venta extends CI_Controller{
     function __construct(){
         parent::__construct();
         $this->load->model('Venta_model');
+        $this->load->library('session');
+
     }
 //FUNCION INDEX
     public function index(){
-        $this->load->model('clienteModel'); // Carga el modelo de clientes
-        $data['clientes'] = $this->clienteModel->getClientes(); // Obtén los datos de clientes
-        // Agrega otros datos necesarios a $data
-        $this->load->view('V_venta', $data); 
+        if (!$this->session->userdata('user')) {
+            redirect('login/index');
+        } else {
+            $this->load->model('clienteModel'); // Carga el modelo de clientes
+            $data['clientes'] = $this->clienteModel->getClientes(); // Obtén los datos de clientes
+            // Agrega otros datos necesarios a $data
+            $this->load->view('V_venta', $data);
+        }
+        
     }
 //FUNCION INSERTAR
     public function insertar(){

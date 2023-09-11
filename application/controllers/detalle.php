@@ -12,9 +12,14 @@ class detalle extends CI_Controller
     //funcion index
     public function index($venta_id = null)
     {
-        // Pasa el venta_id a la vista V_detalle
+        if (!$this->session->userdata('user')) {
+            redirect('login/index');
+        } else {
+           // Pasa el venta_id a la vista V_detalle
         $data['venta_id'] = $venta_id;
         $this->load->view('V_detalle', $data);
+        }
+        
     }
 
     //funcion insertar
